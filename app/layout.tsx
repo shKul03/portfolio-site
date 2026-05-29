@@ -17,14 +17,35 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'Shloka Kulkarni — AI Engineer',
+  title: 'Shloka Kulkarni — AI Engineer | RAG Systems | LLM Engineering',
   description:
-    'AI Engineer building RAG pipelines, voice bots, and intelligent document systems that work in production.',
+    'Shloka Kulkarni is an AI Engineer at Technossus AI Studio specialising in RAG pipelines, LLM-powered backends, voice bots, and intelligent document processing. Ex-CrowdStrike. Based in Pune, India.',
+  keywords: [
+    'Shloka Kulkarni',
+    'AI Engineer Pune',
+    'RAG engineer India',
+    'LLM engineering',
+    'pgvector developer',
+    'Python AI developer',
+    'Technossus',
+    'CrowdStrike engineer',
+    'retrieval augmented generation',
+    'voice bot developer',
+    'FastAPI developer',
+    'full stack AI engineer India',
+  ],
   openGraph: {
     title: 'Shloka Kulkarni — AI Engineer',
     description:
-      'AI Engineer building RAG pipelines, voice bots, and intelligent document systems that work in production.',
+      'Building RAG systems, voice bots, and intelligent AI pipelines in production.',
+    url: 'https://shlokakulkarni.vercel.app',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Shloka Kulkarni — AI Engineer',
+    description:
+      'Building RAG systems, voice bots, and intelligent AI pipelines in production.',
   },
 };
 

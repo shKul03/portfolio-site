@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 
 const TICKER_TEXT =
-  'SHLOKA KULKARNI ✦ AI ENGINEER ✦ RAG SYSTEMS ✦ VOICE BOTS ✦ TECHNOSSUS ✦ EX-CROWDSTRIKE ✦ ';
+  'SHLOKA KULKARNI ✦ AI ENGINEER ✦ RAG SYSTEMS ✦ LLM ENGINEERING ✦ PUNE INDIA ✦ PYTHON DEVELOPER ✦ FASTAPI ✦ PGVECTOR ✦ RETRIEVAL AUGMENTED GENERATION ✦ VOICE BOT ARCHITECT ✦ FULL STACK AI ✦ EX-CROWDSTRIKE ✦ TECHNOSSUS AI STUDIO ✦ MACHINE LEARNING ENGINEER ✦ DOCUMENT INTELLIGENCE ✦ NEXT.JS ✦ REACT DEVELOPER ✦ OPEN TO WORK ✦ ';
 
 export default function Hero() {
   const scrollTo = (id: string) => {
@@ -37,7 +37,7 @@ export default function Hero() {
 
       {/* Rotated left label — AI ENGINEER */}
       <div
-        className="hidden lg:flex absolute left-3 top-1/2 -translate-y-1/2 z-10 items-center"
+        className="hidden lg:flex absolute left-3 top-1/2 z-10 items-center"
         style={{ writingMode: 'vertical-rl', transform: 'translateY(-50%) rotate(180deg)' }}
       >
         <span className="font-heading text-[11px] font-bold uppercase tracking-[0.3em] text-accent">
@@ -47,7 +47,7 @@ export default function Hero() {
 
       {/* Rotated right label — 2026 */}
       <div
-        className="hidden lg:flex absolute right-3 top-1/2 -translate-y-1/2 z-10 items-center"
+        className="hidden lg:flex absolute right-3 top-1/2 z-10 items-center"
         style={{ writingMode: 'vertical-rl', transform: 'translateY(-50%)' }}
       >
         <span className="font-heading text-[11px] font-bold uppercase tracking-[0.3em] text-accent">
@@ -55,26 +55,32 @@ export default function Hero() {
         </span>
       </div>
 
-      {/* Centre — massive name */}
-      <div className="flex-1 flex flex-col items-center justify-center px-4 pt-16 pb-4 relative z-10">
+      {/* Centre — statement headline */}
+      <div className="flex-1 flex flex-col items-center justify-center px-6 lg:px-20 pt-16 pb-4 relative z-10">
         <motion.div
-          className="text-center leading-none select-none"
-          initial={{ opacity: 0, y: 60 }}
+          className="text-center"
+          initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div
-            className="font-heading font-black text-accent block"
-            style={{ fontSize: 'clamp(4rem, 18vw, 18rem)', lineHeight: 0.88, letterSpacing: '-0.01em' }}
+          {/* Main headline */}
+          <h1
+            className="font-heading font-black text-ink leading-[0.92] tracking-tight"
+            style={{ fontSize: 'clamp(36px, 6vw, 72px)' }}
           >
-            SHLOKA
-          </div>
-          <div
-            className="font-heading font-black text-accent block"
-            style={{ fontSize: 'clamp(4rem, 18vw, 18rem)', lineHeight: 0.88, letterSpacing: '-0.01em' }}
+            I BUILD AI SYSTEMS
+            <br />
+            THAT WORK IN PRODUCTION.
+          </h1>
+
+          {/* Name byline */}
+          <p
+            className="font-heading font-bold text-accent mt-4 tracking-wide"
+            style={{ fontSize: 'clamp(16px, 2.2vw, 24px)' }}
           >
-            KULKARNI
-          </div>
+            <span className="text-muted mr-2">—</span>
+            SHLOKA KULKARNI · AI ENGINEER · TECHNOSSUS AI STUDIO
+          </p>
         </motion.div>
 
         {/* Subline */}
@@ -84,7 +90,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.35 }}
         >
-          AI Engineer&nbsp;·&nbsp;RAG Pipelines&nbsp;·&nbsp;Voice Bots&nbsp;·&nbsp;Intelligent Document Systems
+          RAG Pipelines&nbsp;·&nbsp;Voice Bots&nbsp;·&nbsp;LLM Engineering&nbsp;·&nbsp;Intelligent Document Systems
         </motion.p>
 
         {/* CTA buttons */}
@@ -136,15 +142,19 @@ export default function Hero() {
       {/* Bottom ticker bar */}
       <div className="w-full bg-accent py-3 overflow-hidden z-20">
         <div className="ticker-track">
-          {/* Duplicate the string so the loop is seamless */}
-          <span className="font-heading font-bold text-sm text-bg tracking-widest whitespace-nowrap pr-0">
-            {TICKER_TEXT.repeat(6)}
+          <span className="font-heading font-bold text-sm text-bg tracking-widest whitespace-nowrap">
+            {TICKER_TEXT.repeat(4)}
           </span>
-          <span className="font-heading font-bold text-sm text-bg tracking-widest whitespace-nowrap pr-0" aria-hidden>
-            {TICKER_TEXT.repeat(6)}
+          <span className="font-heading font-bold text-sm text-bg tracking-widest whitespace-nowrap" aria-hidden>
+            {TICKER_TEXT.repeat(4)}
           </span>
         </div>
       </div>
+
+      {/* SEO hidden text — visible to crawlers and screen readers */}
+      <span style={{ position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap' }}>
+        Shloka Kulkarni is an AI Engineer based in Pune, India, specialising in Retrieval Augmented Generation, LLM engineering, Python backend development, FastAPI, pgvector, voice bots, and intelligent document processing. Currently at Technossus AI Studio. Previously at CrowdStrike.
+      </span>
     </section>
   );
 }

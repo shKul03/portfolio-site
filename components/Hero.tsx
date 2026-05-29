@@ -1,143 +1,145 @@
 'use client';
 
-import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
-const socials = [
-  { label: 'GitHub (shKul03)', href: 'https://github.com/shKul03' },
-  { label: 'GitHub (ObnoxiousButCool)', href: 'https://github.com/ObnoxiousButCool' },
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/shlokakulkarni' },
-];
+const TICKER_TEXT =
+  'SHLOKA KULKARNI ✦ AI ENGINEER ✦ RAG SYSTEMS ✦ VOICE BOTS ✦ TECHNOSSUS ✦ EX-CROWDSTRIKE ✦ ';
 
 export default function Hero() {
-  const ctaRef = useRef<HTMLAnchorElement>(null);
-  const [magnetPos, setMagnetPos] = useState({ x: 0, y: 0 });
-  const [hovered, setHovered] = useState(false);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    const dx = (e.clientX - cx) * 0.35;
-    const dy = (e.clientY - cy) * 0.35;
-    setMagnetPos({ x: dx, y: dy });
-  };
-
-  const handleMouseLeave = () => {
-    setMagnetPos({ x: 0, y: 0 });
-    setHovered(false);
-  };
-
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <section
-      className="relative min-h-screen flex flex-col justify-center px-6 lg:px-8 pt-24 pb-16 max-w-6xl mx-auto"
       aria-label="Hero"
+      className="relative min-h-screen flex flex-col overflow-hidden bg-bg"
     >
-      {/* Headline */}
-      <div className="mb-8">
-        <motion.h1
-          className="font-heading text-[clamp(3rem,9vw,7.5rem)] font-black leading-[0.92] tracking-tight text-ink"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        >
-          I build AI systems
-          <br />
-          <span className="text-accent italic">that work</span>
-          <br />
-          in production.
-        </motion.h1>
-      </div>
-
-      {/* Subline */}
-      <motion.p
-        className="font-body text-sm tracking-widest uppercase text-muted mb-12 max-w-xl"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-      >
-        AI Engineer&nbsp;&nbsp;·&nbsp;&nbsp;RAG Pipelines&nbsp;&nbsp;·&nbsp;&nbsp;Voice Bots&nbsp;&nbsp;·&nbsp;&nbsp;Intelligent Document Systems
-      </motion.p>
-
-      {/* Social links */}
+      {/* Top-left byline */}
       <motion.div
-        className="flex flex-wrap gap-x-6 gap-y-2 mb-12"
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
-      >
-        {socials.map((s) => (
-          <a
-            key={s.label}
-            href={s.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="nav-link text-xs font-body text-muted hover:text-ink transition-colors duration-200"
-          >
-            {s.label}
-          </a>
-        ))}
-      </motion.div>
-
-      {/* CTAs */}
-      <motion.div
-        className="flex flex-wrap gap-4 items-center"
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-      >
-        {/* Magnetic CTA */}
-        <motion.a
-          ref={ctaRef}
-          href="#projects"
-          onClick={(e) => { e.preventDefault(); scrollTo('projects'); }}
-          onMouseMove={handleMouseMove}
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={handleMouseLeave}
-          animate={{ x: magnetPos.x, y: magnetPos.y }}
-          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-          className="relative inline-flex items-center gap-2 bg-accent text-bg font-body font-semibold text-sm px-7 py-3.5 rounded-full overflow-hidden group"
-          style={{ willChange: 'transform' }}
-        >
-          <span className="relative z-10">See my work</span>
-          <motion.span
-            className="relative z-10 inline-block"
-            animate={{ x: hovered ? 4 : 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            →
-          </motion.span>
-          {/* Hover fill */}
-          <span className="absolute inset-0 bg-[#c93a12] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 rounded-full" />
-        </motion.a>
-
-        <button
-          onClick={() => scrollTo('contact')}
-          className="inline-flex items-center gap-2 border border-border text-ink font-body text-sm px-7 py-3.5 rounded-full hover:border-accent hover:text-accent transition-colors duration-300 cursor-pointer bg-transparent"
-        >
-          Get in touch
-        </button>
-      </motion.div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-10 left-6 lg:left-8 flex items-center gap-3"
+        className="absolute top-20 left-6 lg:left-10 z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
       >
-        <motion.div
-          className="w-px h-10 bg-muted/40"
-          animate={{ scaleY: [1, 0.4, 1] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-          style={{ originY: 0 }}
-        />
-        <span className="text-[10px] uppercase tracking-widest text-muted font-body">Scroll</span>
+        <span
+          className="font-body text-[11px] uppercase tracking-[0.2em] text-muted"
+          style={{ fontVariant: 'small-caps' }}
+        >
+          by Shloka Kulkarni
+        </span>
       </motion.div>
+
+      {/* Rotated left label — AI ENGINEER */}
+      <div
+        className="hidden lg:flex absolute left-3 top-1/2 -translate-y-1/2 z-10 items-center"
+        style={{ writingMode: 'vertical-rl', transform: 'translateY(-50%) rotate(180deg)' }}
+      >
+        <span className="font-heading text-[11px] font-bold uppercase tracking-[0.3em] text-accent">
+          AI ENGINEER
+        </span>
+      </div>
+
+      {/* Rotated right label — 2026 */}
+      <div
+        className="hidden lg:flex absolute right-3 top-1/2 -translate-y-1/2 z-10 items-center"
+        style={{ writingMode: 'vertical-rl', transform: 'translateY(-50%)' }}
+      >
+        <span className="font-heading text-[11px] font-bold uppercase tracking-[0.3em] text-accent">
+          2026
+        </span>
+      </div>
+
+      {/* Centre — massive name */}
+      <div className="flex-1 flex flex-col items-center justify-center px-4 pt-16 pb-4 relative z-10">
+        <motion.div
+          className="text-center leading-none select-none"
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div
+            className="font-heading font-black text-accent block"
+            style={{ fontSize: 'clamp(4rem, 18vw, 18rem)', lineHeight: 0.88, letterSpacing: '-0.01em' }}
+          >
+            SHLOKA
+          </div>
+          <div
+            className="font-heading font-black text-accent block"
+            style={{ fontSize: 'clamp(4rem, 18vw, 18rem)', lineHeight: 0.88, letterSpacing: '-0.01em' }}
+          >
+            KULKARNI
+          </div>
+        </motion.div>
+
+        {/* Subline */}
+        <motion.p
+          className="font-body text-sm tracking-widest uppercase text-muted mt-8 text-center"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.35 }}
+        >
+          AI Engineer&nbsp;·&nbsp;RAG Pipelines&nbsp;·&nbsp;Voice Bots&nbsp;·&nbsp;Intelligent Document Systems
+        </motion.p>
+
+        {/* CTA buttons */}
+        <motion.div
+          className="flex flex-wrap gap-4 items-center justify-center mt-8"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+        >
+          <button
+            onClick={() => scrollTo('projects')}
+            className="inline-flex items-center gap-2 border border-ink text-ink font-body text-sm px-7 py-3 hover:bg-ink hover:text-bg transition-colors duration-200 cursor-pointer bg-transparent"
+          >
+            See my work ↓
+          </button>
+          <button
+            onClick={() => scrollTo('contact')}
+            className="inline-flex items-center gap-2 bg-accent text-bg font-body text-sm px-7 py-3 hover:opacity-90 transition-opacity duration-200 cursor-pointer border-none"
+          >
+            Get in touch
+          </button>
+        </motion.div>
+      </div>
+
+      {/* Geometric circles — bottom-left */}
+      <div className="absolute bottom-12 left-0 z-10 overflow-visible pointer-events-none">
+        <div
+          className="w-32 h-32 rounded-full bg-accent -translate-x-1/2"
+          style={{ marginLeft: '48px' }}
+        />
+        <div
+          className="w-20 h-20 rounded-full bg-accent -translate-x-1/2 -mt-6"
+          style={{ marginLeft: '16px' }}
+        />
+      </div>
+
+      {/* Geometric circles — bottom-right */}
+      <div className="absolute bottom-12 right-0 z-10 overflow-visible pointer-events-none">
+        <div
+          className="w-32 h-32 rounded-full bg-accent translate-x-1/2"
+          style={{ marginRight: '48px' }}
+        />
+        <div
+          className="w-20 h-20 rounded-full bg-accent translate-x-1/2 -mt-6"
+          style={{ marginRight: '16px' }}
+        />
+      </div>
+
+      {/* Bottom ticker bar */}
+      <div className="w-full bg-accent py-3 overflow-hidden z-20">
+        <div className="ticker-track">
+          {/* Duplicate the string so the loop is seamless */}
+          <span className="font-heading font-bold text-sm text-bg tracking-widest whitespace-nowrap pr-0">
+            {TICKER_TEXT.repeat(6)}
+          </span>
+          <span className="font-heading font-bold text-sm text-bg tracking-widest whitespace-nowrap pr-0" aria-hidden>
+            {TICKER_TEXT.repeat(6)}
+          </span>
+        </div>
+      </div>
     </section>
   );
 }

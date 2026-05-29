@@ -29,7 +29,7 @@ export default function Skills() {
   return (
     <section id="skills" className="py-24 lg:py-32 px-6 lg:px-8 max-w-6xl mx-auto">
       <FadeUp>
-        <span className="text-[10px] uppercase tracking-widest text-muted font-body block mb-10">
+        <span className="font-heading text-xs uppercase tracking-widest text-muted font-bold block mb-10">
           Skills
         </span>
       </FadeUp>
@@ -45,9 +45,8 @@ export default function Skills() {
                 {g.items.map((item) => (
                   <span
                     key={item}
-                    className="inline-flex items-center gap-1.5 font-body text-sm text-ink/80"
+                    className="inline-flex items-center font-body text-sm text-accent bg-bg border border-accent/40 px-3 py-1 hover:bg-[rgba(59,71,232,0.06)] transition-colors duration-200"
                   >
-                    <span className="w-1 h-1 rounded-full bg-accent shrink-0" aria-hidden />
                     {item}
                   </span>
                 ))}

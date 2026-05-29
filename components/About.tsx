@@ -13,7 +13,7 @@ export default function About() {
   return (
     <section id="about" className="py-24 lg:py-32 px-6 lg:px-8 max-w-6xl mx-auto">
       <FadeUp>
-        <span className="text-[10px] uppercase tracking-widest text-muted font-body block mb-10">
+        <span className="font-heading text-xs uppercase tracking-widest text-muted font-bold block mb-10">
           About
         </span>
       </FadeUp>
@@ -21,7 +21,7 @@ export default function About() {
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-16 lg:gap-24 items-start">
         {/* Bio */}
         <FadeUp delay={0.1}>
-          <p className="font-body text-xl lg:text-2xl text-ink/90 leading-relaxed font-light max-w-2xl">
+          <p className="font-body text-xl lg:text-2xl text-ink/90 leading-relaxed font-normal max-w-2xl">
             I build AI systems that actually work in production. Currently part of the{' '}
             <span className="text-accent font-medium">AI Studio</span> team at Technossus — a unit
             focused on researching, experimenting, and shipping AI-first products. My work sits at

@@ -28,9 +28,9 @@ export default function Contact() {
     >
       <FadeUp>
         <h2 className="font-heading text-[clamp(3rem,8vw,6.5rem)] font-black leading-[0.9] tracking-tight text-ink mb-6">
-          Let&apos;s build
+          LET&apos;S BUILD
           <br />
-          <span className="text-accent italic">something.</span>
+          <span className="text-accent">SOMETHING.</span>
         </h2>
       </FadeUp>
 
@@ -52,7 +52,7 @@ export default function Contact() {
               <span className="font-body text-xs text-muted uppercase tracking-widest w-24 shrink-0">
                 {l.label}
               </span>
-              <span className="font-heading text-xl lg:text-2xl font-light text-ink group-hover:text-accent transition-colors duration-300">
+              <span className="font-body text-xl lg:text-2xl text-ink group-hover:text-accent transition-colors duration-300">
                 {l.display}
               </span>
               <span className="ml-auto font-body text-muted group-hover:text-accent transition-colors duration-300 text-lg">

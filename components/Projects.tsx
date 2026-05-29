@@ -48,7 +48,7 @@ const projects: Project[] = [
     subNote:
       'Drove client meetings, delivered technical walkthroughs and demos, contributed to the sales pitch and documentation, and made direct feature additions to the AI implementation.',
     tags: ['AI', 'WhatsApp Integration', 'NLP', 'Python', 'Queue Management'],
-    href: 'https://github.com/BikkuKumar-spec/ClinicQueue2/tree/Dev',
+    href: 'https://github.com/shKul03/SentiCure.git',
     badge: 'Presales & Client-Facing',
     accentBg: true,
   },
@@ -93,17 +93,16 @@ function ProjectCard({
   const [hovered, setHovered] = useState(false);
 
   const baseBg = project.accentBg
-    ? 'bg-[rgba(232,76,30,0.055)]'
-    : 'bg-transparent';
-  const hoverBg = 'hover:bg-[rgba(232,76,30,0.09)]';
+    ? 'bg-[rgba(59,71,232,0.04)]'
+    : 'bg-bg';
 
   return (
     <div
-      className={`group relative border border-border rounded-sm p-8 lg:p-10 transition-colors duration-300 ${baseBg} ${hoverBg}`}
+      className={`group relative border border-border p-8 lg:p-10 transition-colors duration-300 ${baseBg} hover:bg-[rgba(59,71,232,0.06)]`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* Top-right controls: GitHub arrow + optional Live link */}
+      {/* Top-right controls */}
       <div className="absolute top-8 right-8 lg:top-10 lg:right-10 flex items-center gap-3">
         {project.liveHref && (
           <a
@@ -111,7 +110,7 @@ function ProjectCard({
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="font-body text-[11px] text-accent border border-accent/40 px-2 py-0.5 rounded-sm hover:bg-accent hover:text-bg transition-colors duration-200"
+            className="font-body text-[11px] text-accent border border-accent/40 px-2 py-0.5 hover:bg-accent hover:text-bg transition-colors duration-200"
             aria-label={`${project.name} — live demo`}
           >
             Live ↗
@@ -135,7 +134,7 @@ function ProjectCard({
 
       {/* Badge */}
       {project.badge && (
-        <span className="inline-block font-body text-[10px] uppercase tracking-widest text-accent border border-accent/30 px-2.5 py-1 rounded-sm mb-4">
+        <span className="inline-block font-body text-[10px] uppercase tracking-widest text-accent border border-accent/30 px-2.5 py-1 mb-4">
           {project.badge}
         </span>
       )}
@@ -154,7 +153,7 @@ function ProjectCard({
         {project.description}
       </p>
 
-      {/* Sub-note (SentiCore presales detail) */}
+      {/* Sub-note */}
       {project.subNote && (
         <p className="font-body text-xs text-muted/60 leading-relaxed mb-5 max-w-lg italic">
           {project.subNote}
@@ -166,7 +165,7 @@ function ProjectCard({
         {project.tags.map((t) => (
           <span
             key={t}
-            className="font-body text-[11px] text-muted/70 bg-surface px-2.5 py-1 rounded-sm tracking-wide"
+            className="font-body text-[11px] text-accent bg-bg border border-accent/30 px-2.5 py-1 tracking-wide"
           >
             {t}
           </span>
@@ -183,7 +182,7 @@ export default function Projects() {
   return (
     <section id="projects" className="py-24 lg:py-32 px-6 lg:px-8 max-w-6xl mx-auto">
       <FadeUp>
-        <span className="text-[10px] uppercase tracking-widest text-muted font-body block mb-10">
+        <span className="font-heading text-xs uppercase tracking-widest text-muted font-bold block mb-10">
           Projects
         </span>
       </FadeUp>

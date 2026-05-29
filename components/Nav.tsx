@@ -46,7 +46,7 @@ export default function Nav() {
           {/* Monogram */}
           <a
             href="#"
-            className="font-heading text-xl font-bold text-accent tracking-tight"
+            className="font-heading text-2xl font-black text-accent tracking-tight"
             aria-label="Shloka Kulkarni — home"
           >
             SK
@@ -66,7 +66,7 @@ export default function Nav() {
             <a
               href="/resume.pdf"
               download
-              className="text-sm font-body border border-border text-ink px-4 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors duration-200"
+              className="text-sm font-body border border-border text-ink px-4 py-1.5 hover:border-accent hover:text-accent transition-colors duration-200"
             >
               Download Resume
             </a>
@@ -116,7 +116,7 @@ export default function Nav() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 * i + 0.1 }}
                   onClick={() => handleNavClick(l.href)}
-                  className="text-left font-heading text-5xl font-light text-ink hover:text-accent transition-colors duration-200 cursor-pointer bg-transparent border-none"
+                  className="text-left font-heading text-5xl font-black text-ink hover:text-accent transition-colors duration-200 cursor-pointer bg-transparent border-none"
                 >
                   {l.label}
                 </motion.button>
@@ -127,7 +127,7 @@ export default function Nav() {
                 transition={{ delay: 0.3 }}
                 href="/resume.pdf"
                 download
-                className="mt-4 self-start text-sm font-body border border-border text-ink px-6 py-2 rounded-full hover:border-accent hover:text-accent transition-colors duration-200"
+                className="mt-4 self-start text-sm font-body border border-border text-ink px-6 py-2 hover:border-accent hover:text-accent transition-colors duration-200"
               >
                 Download Resume
               </motion.a>

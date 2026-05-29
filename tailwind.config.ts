@@ -9,15 +9,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: '#111110',
-        surface: '#1A1A18',
-        accent: '#E84C1E',
-        ink: '#F7F5F0',
-        muted: '#6B6B65',
-        border: '#2A2A27',
+        bg: '#F2EFE7',
+        surface: '#EAE7DF',
+        accent: '#3B47E8',
+        ink: '#0F0F0E',
+        muted: '#5C5A54',
+        border: '#D4D0C8',
       },
       fontFamily: {
-        heading: ['var(--font-fraunces)', 'Georgia', 'serif'],
+        heading: ['var(--font-barlow)', 'Impact', 'sans-serif'],
         body: ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
       },
     },

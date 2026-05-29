@@ -7,6 +7,7 @@ import FadeUp from './FadeUp';
 interface Project {
   name: string;
   description: string;
+  presalesNote?: string;
   subNote?: string;
   tags: string[];
   href: string;
@@ -45,6 +46,8 @@ const projects: Project[] = [
     name: 'SentiCore',
     description:
       'AI-powered patient appointment system over WhatsApp — no app, no website. Patients chat with an AI that takes symptoms, suggests the right specialist, checks doctor availability, manages queues, and sends live appointment updates.',
+    presalesNote:
+      'Drove client meetings, delivered technical demos, and contributed directly to the sales pitch — beyond the technical build.',
     subNote:
       'Drove client meetings, delivered technical walkthroughs and demos, contributed to the sales pitch and documentation, and made direct feature additions to the AI implementation.',
     tags: ['AI', 'WhatsApp Integration', 'NLP', 'Python', 'Queue Management'],
@@ -64,6 +67,8 @@ const projects: Project[] = [
     name: 'Smart Revenue Collector',
     description:
       'Full-stack AI debt-collection system: ML defaulter scoring, LLM outreach generation, priority queue, live React dashboard.',
+    presalesNote:
+      'Presented solution to stakeholders; involved in customer-facing delivery and requirements discussion.',
     tags: ['Python', 'FastAPI', 'React', 'TypeScript', 'Tailwind'],
     href: 'https://github.com/ObnoxiousButCool/SmartRevenueCollector',
   },
@@ -92,18 +97,16 @@ function ProjectCard({
 }) {
   const [hovered, setHovered] = useState(false);
 
-  const baseBg = project.accentBg
-    ? 'bg-[rgba(59,71,232,0.04)]'
-    : 'bg-bg';
+  const baseBg = project.accentBg ? 'bg-[rgba(59,71,232,0.04)]' : 'bg-bg';
 
   return (
     <div
-      className={`group relative border border-border p-8 lg:p-10 transition-colors duration-300 ${baseBg} hover:bg-[rgba(59,71,232,0.06)]`}
+      className={`group relative border border-border p-6 lg:p-8 transition-colors duration-300 ${baseBg} hover:bg-[rgba(59,71,232,0.06)]`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       {/* Top-right controls */}
-      <div className="absolute top-8 right-8 lg:top-10 lg:right-10 flex items-center gap-3">
+      <div className="absolute top-6 right-6 lg:top-8 lg:right-8 flex items-center gap-3">
         {project.liveHref && (
           <a
             href={project.liveHref}
@@ -134,14 +137,14 @@ function ProjectCard({
 
       {/* Badge */}
       {project.badge && (
-        <span className="inline-block font-body text-[10px] uppercase tracking-widest text-accent border border-accent/30 px-2.5 py-1 mb-4">
+        <span className="inline-block font-body text-[10px] uppercase tracking-widest text-accent border border-accent/30 px-2.5 py-0.5 mb-3">
           {project.badge}
         </span>
       )}
 
       {/* Name */}
       <h3
-        className={`font-heading font-black text-ink mb-3 pr-28 leading-tight ${
+        className={`font-heading font-black text-ink mb-2 pr-24 leading-tight ${
           large ? 'text-4xl lg:text-5xl' : 'text-2xl lg:text-3xl'
         }`}
       >
@@ -149,23 +152,25 @@ function ProjectCard({
       </h3>
 
       {/* Description */}
-      <p className="font-body text-sm text-muted leading-relaxed mb-3 max-w-lg">
+      <p className="font-body text-sm text-muted leading-relaxed mb-2 max-w-lg">
         {project.description}
       </p>
 
-      {/* Sub-note */}
-      {project.subNote && (
-        <p className="font-body text-xs text-muted/60 leading-relaxed mb-5 max-w-lg italic">
-          {project.subNote}
+      {/* Presales callout */}
+      {project.presalesNote && (
+        <p className="font-body text-xs text-muted/70 leading-relaxed mb-2 max-w-lg italic">
+          {project.presalesNote}
         </p>
       )}
 
+      {/* Sub-note (hidden — superseded by presalesNote on SentiCore) */}
+
       {/* Tags */}
-      <div className="flex flex-wrap gap-2 mt-3">
+      <div className="flex flex-wrap gap-1.5 mt-3">
         {project.tags.map((t) => (
           <span
             key={t}
-            className="font-body text-[11px] text-accent bg-bg border border-accent/30 px-2.5 py-1 tracking-wide"
+            className="font-body text-[11px] text-accent bg-bg border border-accent/30 px-2.5 py-0.5 tracking-wide"
           >
             {t}
           </span>
@@ -180,21 +185,21 @@ export default function Projects() {
     projects;
 
   return (
-    <section id="projects" className="py-24 lg:py-32 px-6 lg:px-8 max-w-6xl mx-auto">
+    <section id="projects" className="py-16 lg:py-24 px-6 lg:px-8 max-w-6xl mx-auto">
       <FadeUp>
-        <span className="font-heading text-xs uppercase tracking-widest text-muted font-bold block mb-10">
+        <span className="font-heading text-xs uppercase tracking-widest text-muted font-bold block mb-7">
           Projects
         </span>
       </FadeUp>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-3">
         {/* Row 1 — LiveMind, full width */}
         <FadeUp delay={0.05}>
           <ProjectCard project={liveMind} large />
         </FadeUp>
 
-        {/* Row 2 — Knowledge Engine + Technossus Design System */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Row 2 */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {[knowledgeEngine, technossusDss].map((p, i) => (
             <FadeUp key={p.name} delay={0.08 + i * 0.06}>
               <ProjectCard project={p} />
@@ -202,8 +207,8 @@ export default function Projects() {
           ))}
         </div>
 
-        {/* Row 3 — SentiCore + OnBoardIQ */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Row 3 */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {[sentiCore, onBoardIQ].map((p, i) => (
             <FadeUp key={p.name} delay={0.1 + i * 0.06}>
               <ProjectCard project={p} />
@@ -211,8 +216,8 @@ export default function Projects() {
           ))}
         </div>
 
-        {/* Row 4 — Smart Revenue Collector + VoiceBot + BillSage AI */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Row 4 */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {row4.map((p, i) => (
             <FadeUp key={p.name} delay={0.1 + i * 0.06}>
               <ProjectCard project={p} />

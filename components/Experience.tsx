@@ -50,26 +50,24 @@ const roles = [
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-24 lg:py-32 px-6 lg:px-8 max-w-6xl mx-auto">
+    <section id="experience" className="py-16 lg:py-24 px-6 lg:px-8 max-w-6xl mx-auto">
       <FadeUp>
-        <span className="font-heading text-xs uppercase tracking-widest text-muted font-bold block mb-10">
+        <span className="font-heading text-xs uppercase tracking-widest text-muted font-bold block mb-7">
           Experience
         </span>
       </FadeUp>
 
       <div className="relative">
-        {/* Vertical line */}
         <div className="hidden md:block absolute left-0 top-2 bottom-0 w-px bg-gradient-to-b from-border to-transparent" />
 
         <div className="flex flex-col gap-0">
           {roles.map((r, i) => (
             <FadeUp key={r.company} delay={i * 0.08}>
-              <div className="md:pl-10 pb-14 relative group">
+              <div className="md:pl-10 pb-10 relative group">
                 <div className="hidden md:block absolute left-0 top-2 w-px h-full" />
-                {/* Blue dot */}
                 <div className="hidden md:block absolute -left-[3px] top-[7px] w-1.5 h-1.5 rounded-full bg-accent ring-2 ring-bg" />
 
-                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-4">
+                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-3">
                   <div>
                     <span className="font-heading text-xl font-bold text-ink">{r.role}</span>
                     <span className="font-body text-sm text-muted"> · </span>
@@ -80,7 +78,7 @@ export default function Experience() {
                   </span>
                 </div>
 
-                <ul className="flex flex-col gap-2">
+                <ul className="flex flex-col gap-1.5">
                   {r.bullets.map((b) => (
                     <li key={b} className="font-body text-sm text-ink/70 leading-relaxed flex gap-3">
                       <span className="text-accent mt-1 shrink-0">—</span>

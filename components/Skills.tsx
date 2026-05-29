@@ -27,9 +27,9 @@ const groups = [
 
 export default function Skills() {
   return (
-    <section id="skills" className="py-24 lg:py-32 px-6 lg:px-8 max-w-6xl mx-auto">
+    <section id="skills" className="py-16 lg:py-24 px-6 lg:px-8 max-w-6xl mx-auto">
       <FadeUp>
-        <span className="font-heading text-xs uppercase tracking-widest text-muted font-bold block mb-10">
+        <span className="font-heading text-xs uppercase tracking-widest text-muted font-bold block mb-7">
           Skills
         </span>
       </FadeUp>
@@ -37,7 +37,7 @@ export default function Skills() {
       <div className="flex flex-col divide-y divide-border">
         {groups.map((g, i) => (
           <FadeUp key={g.category} delay={i * 0.07}>
-            <div className="py-7 flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-12">
+            <div className="py-5 flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-10">
               <span className="font-body text-xs text-muted uppercase tracking-widest shrink-0 w-28 pt-1">
                 {g.category}
               </span>
@@ -45,7 +45,7 @@ export default function Skills() {
                 {g.items.map((item) => (
                   <span
                     key={item}
-                    className="inline-flex items-center font-body text-sm text-accent bg-bg border border-accent/40 px-3 py-1 hover:bg-[rgba(59,71,232,0.06)] transition-colors duration-200"
+                    className="inline-flex items-center font-body text-sm text-accent bg-bg border border-accent/40 px-3 py-0.5 hover:bg-[rgba(59,71,232,0.06)] transition-colors duration-200"
                   >
                     {item}
                   </span>

@@ -14,6 +14,11 @@ export default function Hero() {
     <section
       aria-label="Hero"
       className="relative min-h-screen flex flex-col overflow-hidden bg-bg"
+      style={{
+        backgroundImage:
+          'radial-gradient(circle, rgba(59,71,232,0.12) 2px, transparent 2px)',
+        backgroundSize: '28px 28px',
+      }}
     >
       {/* Top-left byline */}
       <motion.div
@@ -74,7 +79,7 @@ export default function Hero() {
 
         {/* Subline */}
         <motion.p
-          className="font-body text-sm tracking-widest uppercase text-muted mt-8 text-center"
+          className="font-body text-sm tracking-widest uppercase text-muted mt-5 text-center"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.35 }}
@@ -84,7 +89,7 @@ export default function Hero() {
 
         {/* CTA buttons */}
         <motion.div
-          className="flex flex-wrap gap-4 items-center justify-center mt-8"
+          className="flex flex-wrap gap-4 items-center justify-center mt-5"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}

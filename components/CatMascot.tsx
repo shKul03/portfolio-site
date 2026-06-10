@@ -11,7 +11,18 @@ const MESSAGES = [
   'open to work btw 👋',
 ];
 
-function CatSVG({ size }: { size: number }) {
+export function CatLoafSVG({
+  size,
+  bodyColor = '#0F0F0E',
+  eyeColor = '#F2EFE7',
+  collarColor = '#1224A8',
+}: {
+  size: number;
+  bodyColor?: string;
+  eyeColor?: string;
+  collarColor?: string;
+}) {
+  const pupilColor = bodyColor;
   return (
     <svg
       viewBox="0 0 32 32"
@@ -20,31 +31,28 @@ function CatSVG({ size }: { size: number }) {
       xmlns="http://www.w3.org/2000/svg"
       style={{ display: 'block', imageRendering: 'pixelated' }}
     >
-      {/* Left ear */}
-      <rect x="10" y="2" width="1" height="1" fill="#0F0F0E" />
-      <rect x="9" y="3" width="2" height="1" fill="#0F0F0E" />
+      {/* Left ear — 3px wide, 2px tall */}
+      <rect x="5" y="5" width="3" height="2" fill={bodyColor} />
       {/* Right ear */}
-      <rect x="21" y="2" width="1" height="1" fill="#0F0F0E" />
-      <rect x="21" y="3" width="2" height="1" fill="#0F0F0E" />
-      {/* Head */}
-      <rect x="8" y="4" width="16" height="8" fill="#0F0F0E" />
-      {/* Left eye */}
-      <rect x="11" y="6" width="2" height="2" fill="#F2EFE7" />
-      {/* Right eye */}
-      <rect x="19" y="6" width="2" height="2" fill="#F2EFE7" />
-      {/* Body */}
-      <rect x="9" y="12" width="14" height="12" fill="#0F0F0E" />
-      {/* Collar */}
-      <rect x="9" y="12" width="14" height="2" fill="#3B47E8" />
-      {/* Front left leg */}
-      <rect x="9" y="24" width="4" height="4" fill="#0F0F0E" />
-      {/* Front right leg */}
-      <rect x="19" y="24" width="4" height="4" fill="#0F0F0E" />
-      {/* Tail — curls right from body */}
-      <rect x="23" y="20" width="3" height="2" fill="#0F0F0E" />
-      <rect x="25" y="17" width="2" height="3" fill="#0F0F0E" />
-      <rect x="23" y="15" width="3" height="2" fill="#0F0F0E" />
-      <rect x="22" y="12" width="2" height="4" fill="#0F0F0E" />
+      <rect x="22" y="5" width="3" height="2" fill={bodyColor} />
+      {/* Body top — 1px indent for rounded feel */}
+      <rect x="3" y="7" width="26" height="1" fill={bodyColor} />
+      {/* Body main — 28px wide, 20px tall */}
+      <rect x="2" y="8" width="28" height="20" fill={bodyColor} />
+      {/* Left eye — 2x2 white */}
+      <rect x="8" y="10" width="2" height="2" fill={eyeColor} />
+      {/* Left pupil — 1x1 dark */}
+      <rect x="9" y="11" width="1" height="1" fill={pupilColor} />
+      {/* Right eye — 2x2 white */}
+      <rect x="20" y="10" width="2" height="2" fill={eyeColor} />
+      {/* Right pupil — 1x1 dark */}
+      <rect x="20" y="11" width="1" height="1" fill={pupilColor} />
+      {/* Collar — 1px stripe */}
+      <rect x="3" y="14" width="26" height="1" fill={collarColor} />
+      {/* Tail — pixel steps curling right */}
+      <rect x="30" y="17" width="1" height="3" fill={bodyColor} />
+      <rect x="29" y="20" width="1" height="1" fill={bodyColor} />
+      <rect x="28" y="21" width="1" height="1" fill={bodyColor} />
     </svg>
   );
 }
@@ -144,7 +152,7 @@ export default function CatMascot({ onOpen }: CatMascotProps) {
             transform: 'translateX(-50%)',
             marginBottom: 10,
             background: '#F2EFE7',
-            border: '1px solid #3B47E8',
+            border: '1px solid #1224A8',
             borderRadius: 20,
             padding: '4px 12px',
             whiteSpace: 'nowrap',
@@ -167,7 +175,7 @@ export default function CatMascot({ onOpen }: CatMascotProps) {
               height: 0,
               borderLeft: '5px solid transparent',
               borderRight: '5px solid transparent',
-              borderTop: '7px solid #3B47E8',
+              borderTop: '7px solid #1224A8',
               display: 'block',
             }}
           />
@@ -191,11 +199,7 @@ export default function CatMascot({ onOpen }: CatMascotProps) {
 
       {/* Cat with idle bounce + jump */}
       <motion.div
-        animate={
-          isJumping
-            ? { y: [0, -20, 0] }
-            : { y: [0, -3, 0, 3, 0] }
-        }
+        animate={isJumping ? { y: [0, -20, 0] } : { y: [0, -3, 0, 3, 0] }}
         transition={
           isJumping
             ? { duration: 0.3, ease: 'easeOut' }
@@ -207,7 +211,7 @@ export default function CatMascot({ onOpen }: CatMascotProps) {
           transition={{ duration: 0.2 }}
           style={{ display: 'block' }}
         >
-          <CatSVG size={catSize} />
+          <CatLoafSVG size={catSize} />
         </motion.div>
       </motion.div>
     </motion.div>

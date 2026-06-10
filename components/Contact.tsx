@@ -27,11 +27,23 @@ export default function Contact() {
       className="py-16 lg:py-28 px-6 lg:px-8 max-w-6xl mx-auto"
     >
       <FadeUp>
-        <h2 className="font-heading text-[clamp(2.5rem,7vw,5.5rem)] font-black leading-[0.9] tracking-tight text-ink mb-4">
+        <div style={{ marginBottom: 16 }}>
+          <h2
+            className="font-heading font-black text-ink uppercase"
+            style={{ fontSize: 'clamp(32px, 4vw, 56px)', letterSpacing: '0.02em', lineHeight: 1 }}
+          >
+            Contact
+          </h2>
+          <div style={{ width: 40, height: 3, background: '#3B47E8', marginTop: 8 }} />
+        </div>
+      </FadeUp>
+
+      <FadeUp delay={0.05}>
+        <h3 className="font-heading text-[clamp(2.5rem,7vw,5.5rem)] font-black leading-[0.9] tracking-tight text-ink mb-4">
           LET&apos;S BUILD
           <br />
           <span className="text-accent">SOMETHING.</span>
-        </h2>
+        </h3>
       </FadeUp>
 
       <FadeUp delay={0.1}>

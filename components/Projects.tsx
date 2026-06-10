@@ -1,229 +1,296 @@
 'use client';
 
-import { useState } from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import FadeUp from './FadeUp';
 
 interface Project {
   name: string;
+  slug: string;
   description: string;
-  presalesNote?: string;
-  subNote?: string;
   tags: string[];
-  href: string;
+  githubHref: string;
   liveHref?: string;
-  badge?: string;
-  accentBg?: boolean;
 }
 
 const projects: Project[] = [
-  // Row 1 — full width hero card
   {
     name: 'LiveMind',
+    slug: 'livemind',
     description:
-      'An AI chatbot you can deploy on any website — it scrapes the site live, learns it instantly, and answers user questions conversationally. No document uploads, no storage setup. Point it at a URL and it\'s live in under a day.',
+      "An AI chatbot you can deploy on any website — it scrapes the site live, learns it instantly, and answers user questions conversationally. No document uploads, no storage setup.",
     tags: ['Python', 'FastAPI', 'pgvector', 'Playwright', 'Ollama', 'Docker'],
-    href: 'https://github.com/ObnoxiousButCool/TechnoAI',
+    githubHref: 'https://github.com/ObnoxiousButCool/TechnoAI',
   },
-  // Row 2 — 2 col
   {
     name: 'Knowledge Engine',
+    slug: 'knowledge-engine',
     description:
       'Enterprise RAG backend — chunker → embedder → vector store → re-ranker → LLM response. Full document lifecycle management and test suite.',
     tags: ['Python', 'FastAPI', 'pgvector', 'Re-ranker'],
-    href: 'https://github.com/ObnoxiousButCool/KnowledgeEngineBackend',
+    githubHref: 'https://github.com/ObnoxiousButCool/KnowledgeEngineBackend',
   },
-  {
-    name: 'Technossus Design System',
-    description:
-      'Converted Figma designs directly to code — built a complete design system (tokens, Tailwind preset, React components, typography, colour themes) and used it to develop full website pages, including new pages built from the design system alone without any Figma reference.',
-    tags: ['TypeScript', 'React', 'Tailwind CSS', 'Figma', 'Design Tokens', 'Vite'],
-    href: 'https://github.com/ObnoxiousButCool/Technossus-Design-System',
-    liveHref: 'https://technossus-design-system.vercel.app',
-  },
-  // Row 3 — 2 col
   {
     name: 'SentiCore',
+    slug: 'senticore',
     description:
-      'AI-powered patient appointment system over WhatsApp — no app, no website. Patients chat with an AI that takes symptoms, suggests the right specialist, checks doctor availability, manages queues, and sends live appointment updates.',
-    presalesNote:
-      'Drove client meetings, delivered technical demos, and contributed directly to the sales pitch — beyond the technical build.',
-    subNote:
-      'Drove client meetings, delivered technical walkthroughs and demos, contributed to the sales pitch and documentation, and made direct feature additions to the AI implementation.',
+      'AI-powered patient appointment system over WhatsApp — no app, no website. Patients chat with an AI that takes symptoms, suggests the right specialist, and manages queues.',
     tags: ['AI', 'WhatsApp Integration', 'NLP', 'Python', 'Queue Management'],
-    href: 'https://github.com/shKul03/SentiCure.git',
-    badge: 'Presales & Client-Facing',
-    accentBg: true,
+    githubHref: 'https://github.com/shKul03/SentiCure.git',
   },
   {
     name: 'OnBoardIQ',
+    slug: 'onboardiq',
     description:
       'AI Background Verification pipeline — classifies KYC docs, deduplicates across 3 layers, organises per-candidate, generates audit reports.',
     tags: ['Python', 'Ollama', 'Tesseract OCR', 'Streamlit'],
-    href: 'https://github.com/ObnoxiousButCool/OnBoardIQ-Docs',
+    githubHref: 'https://github.com/ObnoxiousButCool/OnBoardIQ-Docs',
   },
-  // Row 4 — 3 col
   {
     name: 'Smart Revenue Collector',
+    slug: 'smart-revenue-collector',
     description:
       'Full-stack AI debt-collection system: ML defaulter scoring, LLM outreach generation, priority queue, live React dashboard.',
-    presalesNote:
-      'Presented solution to stakeholders; involved in customer-facing delivery and requirements discussion.',
     tags: ['Python', 'FastAPI', 'React', 'TypeScript', 'Tailwind'],
-    href: 'https://github.com/ObnoxiousButCool/SmartRevenueCollector',
+    githubHref: 'https://github.com/ObnoxiousButCool/SmartRevenueCollector',
   },
   {
-    name: 'VoiceBot',
+    name: 'VoiceBot PoC',
+    slug: 'voicebot',
     description:
       'Multi-service voice assistant — Python STT/TTS microservice + C#/.NET orchestrator with Clean Architecture.',
     tags: ['Python', 'FastAPI', 'C#', '.NET'],
-    href: 'https://github.com/Voice-Bot-poc/Voicebot-orchestrator-backend',
+    githubHref: 'https://github.com/Voice-Bot-poc/Voicebot-orchestrator-backend',
   },
   {
     name: 'BillSage AI',
+    slug: 'billsage',
     description:
       'Async OCR pipeline for intelligent bill classification with analytics dashboard.',
     tags: ['Python', 'OCR', 'FastAPI', 'Streamlit'],
-    href: 'https://github.com/shKul03/BillSage',
+    githubHref: 'https://github.com/shKul03/BillSage',
+  },
+  {
+    name: 'Technossus Design System',
+    slug: 'technossus-design-system',
+    description:
+      'Figma-to-code design system with tokens, Tailwind preset, and React components. Built full website pages from the design system alone.',
+    tags: ['TypeScript', 'React', 'Tailwind CSS', 'Figma', 'Design Tokens', 'Vite'],
+    githubHref: 'https://github.com/ObnoxiousButCool/Technossus-Design-System',
+    liveHref: 'https://technossus-design-system.vercel.app',
   },
 ];
 
-function ProjectCard({
-  project,
-  large = false,
-}: {
-  project: Project;
-  large?: boolean;
-}) {
-  const [hovered, setHovered] = useState(false);
+function GitHubIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+    </svg>
+  );
+}
 
-  const baseBg = project.accentBg ? 'bg-[rgba(59,71,232,0.04)]' : 'bg-bg';
+function ProjectCard({ project }: { project: Project }) {
+  const visibleTags = project.tags.slice(0, 4);
+  const extraCount = project.tags.length - 4;
 
   return (
-    <div
-      className={`group relative border border-border p-6 lg:p-8 transition-colors duration-300 ${baseBg} hover:bg-[rgba(59,71,232,0.06)]`}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+    <motion.div
+      whileHover={{ y: -2, boxShadow: '0 4px 24px rgba(0,0,0,0.10)' }}
+      transition={{ duration: 0.2, ease: 'easeOut' }}
+      style={{
+        background: '#FFFFFF',
+        border: '1px solid #E2E0D9',
+        borderRadius: 16,
+        padding: 28,
+        boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+      }}
     >
-      {/* Top-right controls */}
-      <div className="absolute top-6 right-6 lg:top-8 lg:right-8 flex items-center gap-3">
-        {project.liveHref && (
-          <a
-            href={project.liveHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="font-body text-[11px] text-accent border border-accent/40 px-2 py-0.5 hover:bg-accent hover:text-bg transition-colors duration-200"
-            aria-label={`${project.name} — live demo`}
-          >
-            Live ↗
-          </a>
-        )}
-        <a
-          href={project.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`${project.name} — view on GitHub`}
+      {/* Top row */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between',
+          gap: 8,
+          marginBottom: 8,
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            flex: 1,
+            minWidth: 0,
+            flexWrap: 'wrap',
+          }}
         >
-          <motion.span
-            className="font-body text-muted text-lg block"
-            animate={hovered ? { x: 3, y: -3 } : { x: 0, y: 0 }}
-            transition={{ duration: 0.2 }}
+          <h3
+            style={{
+              fontFamily: 'var(--font-dm-sans)',
+              fontWeight: 700,
+              fontSize: 18,
+              color: '#0F0F0E',
+              lineHeight: 1.3,
+              margin: 0,
+            }}
           >
-            ↗
-          </motion.span>
-        </a>
+            {project.name}
+          </h3>
+          {project.liveHref && (
+            <a
+              href={project.liveHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                fontFamily: 'var(--font-dm-sans)',
+                fontSize: 10,
+                fontWeight: 500,
+                color: '#16A34A',
+                background: 'rgba(22,163,74,0.10)',
+                borderRadius: 20,
+                padding: '2px 8px',
+                whiteSpace: 'nowrap',
+                textDecoration: 'none',
+                flexShrink: 0,
+              }}
+            >
+              Live ↗
+            </a>
+          )}
+        </div>
+        <span
+          style={{
+            fontFamily: 'var(--font-dm-sans)',
+            fontSize: 11,
+            color: '#5C5A54',
+            whiteSpace: 'nowrap',
+            flexShrink: 0,
+            paddingTop: 3,
+          }}
+        >
+          {project.tags.length} techs
+        </span>
       </div>
 
-      {/* Badge */}
-      {project.badge && (
-        <span className="inline-block font-body text-[10px] uppercase tracking-widest text-accent border border-accent/30 px-2.5 py-0.5 mb-3">
-          {project.badge}
-        </span>
-      )}
-
-      {/* Name */}
-      <h3
-        className={`font-heading font-black text-ink mb-2 pr-24 leading-tight ${
-          large ? 'text-4xl lg:text-5xl' : 'text-2xl lg:text-3xl'
-        }`}
-      >
-        {project.name}
-      </h3>
-
       {/* Description */}
-      <p className="font-body text-sm text-muted leading-relaxed mb-2 max-w-lg">
+      <p
+        className="line-clamp-2"
+        style={{
+          fontFamily: 'var(--font-dm-sans)',
+          fontSize: 14,
+          color: '#5C5A54',
+          lineHeight: 1.6,
+          marginBottom: 14,
+          flex: 1,
+          margin: '0 0 14px 0',
+        }}
+      >
         {project.description}
       </p>
 
-      {/* Presales callout */}
-      {project.presalesNote && (
-        <p className="font-body text-xs text-muted/70 leading-relaxed mb-2 max-w-lg italic">
-          {project.presalesNote}
-        </p>
-      )}
-
-      {/* Sub-note (hidden — superseded by presalesNote on SentiCore) */}
-
       {/* Tags */}
-      <div className="flex flex-wrap gap-1.5 mt-3">
-        {project.tags.map((t) => (
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 16 }}>
+        {visibleTags.map((tag) => (
           <span
-            key={t}
-            className="font-body text-[11px] text-accent bg-bg border border-accent/30 px-2.5 py-0.5 tracking-wide"
+            key={tag}
+            style={{
+              fontFamily: 'var(--font-dm-sans)',
+              fontSize: 11,
+              color: '#3B47E8',
+              background: 'rgba(59,71,232,0.08)',
+              borderRadius: 20,
+              padding: '3px 10px',
+            }}
           >
-            {t}
+            {tag}
           </span>
         ))}
+        {extraCount > 0 && (
+          <span
+            style={{
+              fontFamily: 'var(--font-dm-sans)',
+              fontSize: 11,
+              color: '#5C5A54',
+              background: '#F0EEE8',
+              borderRadius: 20,
+              padding: '3px 10px',
+            }}
+          >
+            +{extraCount} more
+          </span>
+        )}
       </div>
-    </div>
+
+      {/* Divider */}
+      <div style={{ height: 1, background: '#E2E0D9', marginBottom: 16 }} />
+
+      {/* Footer */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Link
+          href={`/projects/${project.slug}`}
+          style={{
+            fontFamily: 'var(--font-dm-sans)',
+            fontSize: 14,
+            color: '#3B47E8',
+            textDecoration: 'none',
+            fontWeight: 500,
+          }}
+        >
+          View project →
+        </Link>
+        <a
+          href={project.githubHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: '#5C5A54', display: 'flex', alignItems: 'center' }}
+          aria-label={`${project.name} on GitHub`}
+        >
+          <GitHubIcon />
+        </a>
+      </div>
+    </motion.div>
   );
 }
 
 export default function Projects() {
-  const [liveMind, knowledgeEngine, technossusDss, sentiCore, onBoardIQ, ...row4] =
-    projects;
-
   return (
     <section id="projects" className="py-16 lg:py-24 px-6 lg:px-8 max-w-6xl mx-auto">
       <FadeUp>
-        <span className="font-heading text-xs uppercase tracking-widest text-muted font-bold block mb-7">
-          Projects
-        </span>
+        <div style={{ marginBottom: 40 }}>
+          <h2
+            className="font-heading font-black text-ink uppercase"
+            style={{
+              fontSize: 'clamp(32px, 4vw, 56px)',
+              letterSpacing: '0.02em',
+              lineHeight: 1,
+            }}
+          >
+            Projects
+          </h2>
+          <div style={{ width: 40, height: 3, background: '#3B47E8', marginTop: 8 }} />
+        </div>
       </FadeUp>
 
-      <div className="flex flex-col gap-3">
-        {/* Row 1 — LiveMind, full width */}
-        <FadeUp delay={0.05}>
-          <ProjectCard project={liveMind} large />
-        </FadeUp>
-
-        {/* Row 2 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {[knowledgeEngine, technossusDss].map((p, i) => (
-            <FadeUp key={p.name} delay={0.08 + i * 0.06}>
-              <ProjectCard project={p} />
-            </FadeUp>
-          ))}
-        </div>
-
-        {/* Row 3 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {[sentiCore, onBoardIQ].map((p, i) => (
-            <FadeUp key={p.name} delay={0.1 + i * 0.06}>
-              <ProjectCard project={p} />
-            </FadeUp>
-          ))}
-        </div>
-
-        {/* Row 4 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          {row4.map((p, i) => (
-            <FadeUp key={p.name} delay={0.1 + i * 0.06}>
-              <ProjectCard project={p} />
-            </FadeUp>
-          ))}
-        </div>
+      <div
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+        style={{ alignItems: 'stretch' }}
+      >
+        {projects.map((project, i) => (
+          <FadeUp key={project.slug} delay={0.05 + i * 0.04} className="h-full">
+            <ProjectCard project={project} />
+          </FadeUp>
+        ))}
       </div>
     </section>
   );

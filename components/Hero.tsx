@@ -2,9 +2,6 @@
 
 import { motion } from 'framer-motion';
 
-const TICKER_TEXT =
-  'SHLOKA KULKARNI ✦ AI ENGINEER ✦ RAG SYSTEMS ✦ LLM ENGINEERING ✦ PUNE INDIA ✦ PYTHON DEVELOPER ✦ FASTAPI ✦ PGVECTOR ✦ RETRIEVAL AUGMENTED GENERATION ✦ VOICE BOT ARCHITECT ✦ FULL STACK AI ✦ EX-CROWDSTRIKE ✦ TECHNOSSUS AI STUDIO ✦ MACHINE LEARNING ENGINEER ✦ DOCUMENT INTELLIGENCE ✦ NEXT.JS ✦ REACT DEVELOPER ✦ OPEN TO WORK ✦ ';
-
 export default function Hero() {
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
@@ -137,18 +134,6 @@ export default function Hero() {
           className="w-20 h-20 rounded-full bg-accent translate-x-1/2 -mt-6"
           style={{ marginRight: '16px' }}
         />
-      </div>
-
-      {/* Bottom ticker bar */}
-      <div className="w-full bg-accent py-3 overflow-hidden z-20">
-        <div className="ticker-track">
-          <span className="font-heading font-bold text-sm text-bg tracking-widest whitespace-nowrap">
-            {TICKER_TEXT.repeat(4)}
-          </span>
-          <span className="font-heading font-bold text-sm text-bg tracking-widest whitespace-nowrap" aria-hidden>
-            {TICKER_TEXT.repeat(4)}
-          </span>
-        </div>
       </div>
 
       {/* SEO hidden text — visible to crawlers and screen readers */}

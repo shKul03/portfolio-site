@@ -29,9 +29,15 @@ export default function Skills() {
   return (
     <section id="skills" className="py-16 lg:py-24 px-6 lg:px-8 max-w-6xl mx-auto">
       <FadeUp>
-        <span className="font-heading text-xs uppercase tracking-widest text-muted font-bold block mb-7">
-          Skills
-        </span>
+        <div style={{ marginBottom: 40 }}>
+          <h2
+            className="font-heading font-black text-ink uppercase"
+            style={{ fontSize: 'clamp(32px, 4vw, 56px)', letterSpacing: '0.02em', lineHeight: 1 }}
+          >
+            Skills
+          </h2>
+          <div style={{ width: 40, height: 3, background: '#3B47E8', marginTop: 8 }} />
+        </div>
       </FadeUp>
 
       <div className="flex flex-col divide-y divide-border">

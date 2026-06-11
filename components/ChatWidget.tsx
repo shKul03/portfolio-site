@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import catImg from './cat.png';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -18,141 +19,31 @@ interface Message {
   follow_ups?: string[];
 }
 
-// ── Mock response engine ──────────────────────────────────────────────────────
+// ── API ───────────────────────────────────────────────────────────────────────
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getResponse(input: string, personality: Personality): BotResponse {
-  const q = input.toLowerCase();
+const BOT_URL =
+  process.env.NEXT_PUBLIC_BOT_URL ?? 'https://portfolio-bot-uunf.onrender.com';
 
-  if (q.match(/\b(hi|hello|hey|sup|yo)\b/)) {
-    return {
-      content: "Hey! 👋 I'm Shloka's AI assistant. Ask me about her experience, projects, tech stack, or how to get in touch!",
-      follow_ups: ['What has she built?', 'Is she open to work?', "What's her tech stack?"],
-    };
+async function getResponse(
+  message: string,
+  personality: string,
+  session_id: string
+): Promise<BotResponse> {
+  const res = await fetch(`${BOT_URL}/chat`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ session_id, message, personality }),
+  });
+
+  if (!res.ok) {
+    throw new Error(`API error: ${res.status}`);
   }
-  if (q.match(/\b(experience|work|job|career|role|company)\b/)) {
-    return {
-      content:
-        'Shloka is currently an AI Engineer at Technossus AI Studio (Jan 2026–Present) building production RAG systems and AI-first products. Before that she was a Malware Research Engineer at CrowdStrike (Jun 2024–Jun 2025) and a Backend Developer at Kashnate Solutions.',
-      follow_ups: ['Tell me about CrowdStrike', 'What did she build at Technossus?', 'How can I contact her?'],
-    };
-  }
-  if (q.match(/\b(project|build|built|made|create|created|livemind)\b/)) {
-    return {
-      content:
-        'Her standout projects include LiveMind (zero-storage RAG chatbot), Knowledge Engine (enterprise RAG pipeline), SentiCore (WhatsApp AI for appointments), OnBoardIQ (KYC document pipeline), and Smart Revenue Collector (AI debt-collection). 8 projects total — check the Projects section!',
-      follow_ups: ['Tell me about LiveMind', 'Tell me about SentiCore', "What's her RAG experience?"],
-    };
-  }
-  if (q.match(/\b(skill|tech|stack|language|tool|python|rag|llm)\b/)) {
-    return {
-      content:
-        "Shloka's core stack: Python, FastAPI, LLMs, RAG (pgvector, re-rankers), Ollama, React, TypeScript, Next.js, Docker, Kubernetes, PostgreSQL, MongoDB. She specialises in AI/ML backends and production RAG pipelines.",
-      follow_ups: ['What RAG projects has she built?', 'Has she used Kubernetes in production?'],
-    };
-  }
-  if (q.match(/\b(contact|hire|email|reach|available|open to work|looking|open to hire)\b/)) {
-    return {
-      content:
-        "Reach Shloka at kulkarni.shloka03@gmail.com, LinkedIn: linkedin.com/in/shlokakulkarni, or GitHub: github.com/shKul03. She's actively open to full-time AI/ML roles and freelance projects!",
-      follow_ups: ['Download her resume', 'What roles is she looking for?'],
-    };
-  }
-  if (q.match(/\b(rag|retrieval|vector|embedding|pgvector)\b/)) {
-    return {
-      content:
-        "RAG is Shloka's speciality! She's built production RAG pipelines with pgvector, re-rankers, document chunking, and LLM response generation. LiveMind (live web scraping + RAG) and Knowledge Engine (enterprise RAG with full doc lifecycle) are her showcase projects.",
-      follow_ups: ['Tell me about Knowledge Engine', 'Tell me about LiveMind'],
-    };
-  }
-  if (q.match(/\b(crowdstrike|security|malware)\b/)) {
-    return {
-      content:
-        'At CrowdStrike, Shloka built production services in Python, TypeScript, and React for distributed security infrastructure. She built a fault-tolerant scheduling microservice that cut processing delays by 30%, working across Docker, Kubernetes, OpenSearch, and S3.',
-      follow_ups: ["What's she building now?", 'How can I contact her?'],
-    };
-  }
-  if (q.match(/\b(technossus|ai studio)\b/)) {
-    return {
-      content:
-        "Technossus AI Studio is Shloka's current team — a dedicated AI unit shipping AI-first products. She has end-to-end ownership from architecture to deployment.",
-      follow_ups: ['What projects did she build there?', 'How can I contact her?'],
-    };
-  }
-  if (q.match(/\b(location|city|india|pune|based|where|remote)\b/)) {
-    return {
-      content: "Shloka is based in Pune, India and is open to remote roles globally.",
-      follow_ups: ['Is she open to work?', 'How can I contact her?'],
-    };
-  }
-  if (q.match(/\b(resume|cv|download)\b/)) {
-    return {
-      content: "You can download Shloka's resume directly from the nav bar — just click 'Download Resume'!",
-      follow_ups: ['How can I contact her?', 'What roles is she looking for?'],
-    };
-  }
-  if (q.match(/\b(voice|voicebot|speech|stt|tts)\b/)) {
-    return {
-      content:
-        'Shloka built VoiceBot PoC — a multi-service voice assistant with a Python STT/TTS microservice paired with a C#/.NET orchestrator using Clean Architecture. Production-grade multi-service architecture.',
-      follow_ups: ['What other AI projects has she built?', 'How can I contact her?'],
-    };
-  }
-  if (q.match(/\b(whatsapp|senticore|appointment|patient)\b/)) {
-    return {
-      content:
-        'SentiCore is an AI-powered patient appointment system over WhatsApp — patients chat with an AI that takes symptoms, suggests the right specialist, checks availability, manages queues, and sends live updates. No app needed!',
-      follow_ups: ['What other projects has she built?', 'Is she open to work?'],
-    };
-  }
-  if (q.match(/\b(open to work|available|hire|hiring|job|role)\b/)) {
-    return {
-      content: "Yes! Shloka is actively open to work — full-time AI/ML engineering roles, freelance projects, and interesting conversations. Get in touch!",
-      follow_ups: ['How can I contact her?', "What's her tech stack?"],
-    };
-  }
+
+  const data = await res.json();
   return {
-    content:
-      "I'm best at answering questions about Shloka's experience, projects, tech stack, or how to reach her. Try asking 'what projects has she built?' or 'what's her tech stack?'",
-    follow_ups: ['What has she built?', "What's her tech stack?", 'How can I contact her?'],
+    content: data.reply,
+    follow_ups: data.follow_ups ?? [],
   };
-}
-
-// ── Mini cat loaf icon (local version for header/avatars) ─────────────────────
-
-function CatLoafIcon({
-  size,
-  bodyColor = '#0F0F0E',
-  eyeColor = '#F2EFE7',
-  collarColor = '#1224A8',
-}: {
-  size: number;
-  bodyColor?: string;
-  eyeColor?: string;
-  collarColor?: string;
-}) {
-  return (
-    <svg
-      viewBox="0 0 32 32"
-      width={size}
-      height={size}
-      xmlns="http://www.w3.org/2000/svg"
-      style={{ display: 'block', imageRendering: 'pixelated', flexShrink: 0 }}
-    >
-      <rect x="5" y="5" width="3" height="2" fill={bodyColor} />
-      <rect x="22" y="5" width="3" height="2" fill={bodyColor} />
-      <rect x="3" y="7" width="26" height="1" fill={bodyColor} />
-      <rect x="2" y="8" width="28" height="20" fill={bodyColor} />
-      <rect x="8" y="10" width="2" height="2" fill={eyeColor} />
-      <rect x="9" y="11" width="1" height="1" fill={bodyColor} />
-      <rect x="20" y="10" width="2" height="2" fill={eyeColor} />
-      <rect x="20" y="11" width="1" height="1" fill={bodyColor} />
-      <rect x="3" y="14" width="26" height="1" fill={collarColor} />
-      <rect x="30" y="17" width="1" height="3" fill={bodyColor} />
-      <rect x="29" y="20" width="1" height="1" fill={bodyColor} />
-      <rect x="28" y="21" width="1" height="1" fill={bodyColor} />
-    </svg>
-  );
 }
 
 // ── Paw print loading indicator ───────────────────────────────────────────────
@@ -234,11 +125,8 @@ interface ChatWidgetProps {
 }
 
 export default function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const sessionId = useRef<string>(
-    typeof crypto !== 'undefined' && 'randomUUID' in crypto
-      ? crypto.randomUUID()
-      : Math.random().toString(36).slice(2)
+    `session-${Date.now()}-${Math.random().toString(36).slice(2)}`
   );
 
   const [personality, setPersonality] = useState<Personality>('Witty');
@@ -265,6 +153,7 @@ export default function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => inputRef.current?.focus(), 250);
+      fetch(`${BOT_URL}/ping`).catch(() => {});
     }
   }, [isOpen]);
 
@@ -284,18 +173,29 @@ export default function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
       // Show paw animation only if response takes longer than 1 second
       pawTimerRef.current = setTimeout(() => setShowPaws(true), 1000);
 
-      const delay = 700 + Math.random() * 600;
-      await new Promise((r) => setTimeout(r, delay));
-
-      if (pawTimerRef.current) clearTimeout(pawTimerRef.current);
-      setShowPaws(false);
-      setIsTyping(false);
-
-      const response = getResponse(trimmed, personality);
-      setMessages((prev) => [
-        ...prev,
-        { role: 'assistant', content: response.content, follow_ups: response.follow_ups },
-      ]);
+      try {
+        const response = await getResponse(trimmed, personality, sessionId.current);
+        if (pawTimerRef.current) clearTimeout(pawTimerRef.current);
+        setShowPaws(false);
+        setIsTyping(false);
+        setMessages((prev) => [
+          ...prev,
+          { role: 'assistant', content: response.content, follow_ups: response.follow_ups },
+        ]);
+      } catch {
+        if (pawTimerRef.current) clearTimeout(pawTimerRef.current);
+        setShowPaws(false);
+        setIsTyping(false);
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: 'assistant',
+            content:
+              "Hmm, I'm having trouble connecting right now. Try emailing Shloka directly at kulkarni.shloka03@gmail.com 🐾",
+            follow_ups: [],
+          },
+        ]);
+      }
     },
     [isTyping, personality]
   );
@@ -322,9 +222,9 @@ export default function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
           transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
           style={{
             position: 'fixed',
-            bottom: 24,
+            bottom: '200px',
             right: 24,
-            zIndex: 200,
+            zIndex: 100,
             width: 'min(380px, calc(100vw - 48px))',
             height: 560,
             borderRadius: 20,
@@ -355,7 +255,13 @@ export default function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
                 marginBottom: 6,
               }}
             >
-              <CatLoafIcon size={24} bodyColor="#F2EFE7" eyeColor="#1224A8" collarColor="#FFFFFF" />
+              <img
+                src={catImg.src}
+                alt="cat"
+                width={24}
+                height={24}
+                style={{ imageRendering: 'pixelated', filter: 'brightness(0) invert(1)', flexShrink: 0 }}
+              />
               <span
                 style={{
                   fontFamily: 'var(--font-barlow)',
@@ -451,11 +357,12 @@ export default function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
                     <div style={{ display: 'flex', alignItems: 'flex-end', gap: 6 }}>
                       <div style={{ width: 20, flexShrink: 0, paddingBottom: 2 }}>
                         {prevIsUser && (
-                          <CatLoafIcon
-                            size={16}
-                            bodyColor="#1224A8"
-                            eyeColor="#F2EFE7"
-                            collarColor="#F2EFE7"
+                          <img
+                            src={catImg.src}
+                            alt=""
+                            width={16}
+                            height={16}
+                            style={{ imageRendering: 'pixelated' }}
                           />
                         )}
                       </div>

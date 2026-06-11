@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import catImg from './cat.png';
 
 const MESSAGES = [
   'psst... ask me something 👀',
@@ -10,52 +11,6 @@ const MESSAGES = [
   'RAG-powered & ready 🤖',
   'open to work btw 👋',
 ];
-
-export function CatLoafSVG({
-  size,
-  bodyColor = '#0F0F0E',
-  eyeColor = '#F2EFE7',
-  collarColor = '#1224A8',
-}: {
-  size: number;
-  bodyColor?: string;
-  eyeColor?: string;
-  collarColor?: string;
-}) {
-  const pupilColor = bodyColor;
-  return (
-    <svg
-      viewBox="0 0 32 32"
-      width={size}
-      height={size}
-      xmlns="http://www.w3.org/2000/svg"
-      style={{ display: 'block', imageRendering: 'pixelated' }}
-    >
-      {/* Left ear — 3px wide, 2px tall */}
-      <rect x="5" y="5" width="3" height="2" fill={bodyColor} />
-      {/* Right ear */}
-      <rect x="22" y="5" width="3" height="2" fill={bodyColor} />
-      {/* Body top — 1px indent for rounded feel */}
-      <rect x="3" y="7" width="26" height="1" fill={bodyColor} />
-      {/* Body main — 28px wide, 20px tall */}
-      <rect x="2" y="8" width="28" height="20" fill={bodyColor} />
-      {/* Left eye — 2x2 white */}
-      <rect x="8" y="10" width="2" height="2" fill={eyeColor} />
-      {/* Left pupil — 1x1 dark */}
-      <rect x="9" y="11" width="1" height="1" fill={pupilColor} />
-      {/* Right eye — 2x2 white */}
-      <rect x="20" y="10" width="2" height="2" fill={eyeColor} />
-      {/* Right pupil — 1x1 dark */}
-      <rect x="20" y="11" width="1" height="1" fill={pupilColor} />
-      {/* Collar — 1px stripe */}
-      <rect x="3" y="14" width="26" height="1" fill={collarColor} />
-      {/* Tail — pixel steps curling right */}
-      <rect x="30" y="17" width="1" height="3" fill={bodyColor} />
-      <rect x="29" y="20" width="1" height="1" fill={bodyColor} />
-      <rect x="28" y="21" width="1" height="1" fill={bodyColor} />
-    </svg>
-  );
-}
 
 interface CatMascotProps {
   onOpen: () => void;
@@ -121,8 +76,6 @@ export default function CatMascot({ onOpen }: CatMascotProps) {
     }, 2000);
   }, [isJumping, onOpen]);
 
-  const catSize = isMobile ? 64 : 96;
-
   return (
     <motion.div
       initial={{ left: '10%' }}
@@ -131,8 +84,8 @@ export default function CatMascot({ onOpen }: CatMascotProps) {
       onClick={handleClick}
       style={{
         position: 'fixed',
-        bottom: 24,
-        zIndex: 100,
+        bottom: 32,
+        zIndex: 50,
         cursor: 'pointer',
         userSelect: 'none',
       }}
@@ -148,14 +101,16 @@ export default function CatMascot({ onOpen }: CatMascotProps) {
           style={{
             position: 'absolute',
             bottom: '100%',
-            left: '50%',
-            transform: 'translateX(-50%)',
+            ...(parseFloat(wanderState.left) > 70
+              ? { right: 0, left: 'auto', transform: 'none' }
+              : { left: '50%', transform: 'translateX(-50%)' }),
             marginBottom: 10,
             background: '#F2EFE7',
             border: '1px solid #1224A8',
             borderRadius: 20,
             padding: '4px 12px',
-            whiteSpace: 'nowrap',
+            maxWidth: '200px',
+            whiteSpace: 'normal',
             fontFamily: 'var(--font-dm-sans)',
             fontSize: isMobile ? 10 : 11,
             color: '#0F0F0E',
@@ -211,7 +166,16 @@ export default function CatMascot({ onOpen }: CatMascotProps) {
           transition={{ duration: 0.2 }}
           style={{ display: 'block' }}
         >
-          <CatLoafSVG size={catSize} />
+          <img
+            src={catImg.src}
+            alt="pixel cat mascot"
+            style={{
+              imageRendering: 'pixelated',
+              display: 'block',
+              width: isMobile ? '120px' : '160px',
+              height: 'auto',
+            }}
+          />
         </motion.div>
       </motion.div>
     </motion.div>

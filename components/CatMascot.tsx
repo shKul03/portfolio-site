@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import catImg from './cat.png';
+import catImgDark from './cat-dark.png';
+
 
 const MESSAGES = [
   'psst... ask me something 👀',
@@ -104,12 +106,12 @@ export default function CatMascot({ onOpen }: CatMascotProps) {
             ...(parseFloat(wanderState.left) > 70
               ? { right: 0, left: 'auto', transform: 'none' }
               : { left: '50%', transform: 'translateX(-50%)' }),
-            marginBottom: 10,
+            marginBottom: 8,
             background: '#F2EFE7',
             border: '1px solid #1224A8',
             borderRadius: 20,
             padding: '4px 12px',
-            maxWidth: '200px',
+            maxWidth: '900px',
             whiteSpace: 'normal',
             fontFamily: 'var(--font-dm-sans)',
             fontSize: isMobile ? 10 : 11,
@@ -167,13 +169,16 @@ export default function CatMascot({ onOpen }: CatMascotProps) {
           style={{ display: 'block' }}
         >
           <img
-            src={catImg.src}
+            src={catImgDark.src}
             alt="pixel cat mascot"
+            width={85}
+            height={85}
             style={{
               imageRendering: 'pixelated',
               display: 'block',
-              width: '200px',
-              height: 'auto',
+              width: '85px !important' as string,
+              height: 'auto !important' as string,
+              minWidth: '85px',
             }}
           />
         </motion.div>

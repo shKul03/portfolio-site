@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import catImg from './cat.png';
+import catImgLight from './cat-light.png';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -256,7 +257,7 @@ export default function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
               }}
             >
               <img
-                src={catImg.src}
+                src={catImgLight.src}
                 alt="cat"
                 width={24}
                 height={24}

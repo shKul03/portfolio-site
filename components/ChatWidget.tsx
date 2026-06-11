@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import catImg from './cat.png';
 import catImgLight from './cat-light.png';
 
 // ── Types ────────────────────────────────────────────────────────────────────
@@ -154,7 +153,6 @@ export default function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => inputRef.current?.focus(), 250);
-      fetch(`${BOT_URL}/ping`).catch(() => {});
     }
   }, [isOpen]);
 

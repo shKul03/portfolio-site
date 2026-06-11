@@ -10,6 +10,7 @@ import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import CatMascot from '@/components/CatMascot';
 import ChatWidget from '@/components/ChatWidget';
+import BackendPing from '@/components/BackendPing';
 
 export default function Home() {
   const [chatOpen, setChatOpen] = useState(false);
@@ -27,6 +28,7 @@ export default function Home() {
       <Footer />
       <CatMascot onOpen={() => setChatOpen(true)} />
       <ChatWidget isOpen={chatOpen} onClose={() => setChatOpen(false)} />
+      <BackendPing />
     </>
   );
 }

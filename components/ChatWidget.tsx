@@ -357,7 +357,7 @@ export default function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
                       <div style={{ width: 20, flexShrink: 0, paddingBottom: 2 }}>
                         {prevIsUser && (
                           <img
-                            src={catImg.src}
+                            src={catImgLight.src}
                             alt=""
                             width={16}
                             height={16}

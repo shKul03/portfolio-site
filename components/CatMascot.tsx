@@ -38,7 +38,7 @@ export default function CatMascot({ onOpen }: CatMascotProps) {
     let timeoutId: ReturnType<typeof setTimeout>;
 
     const scheduleNext = (fromX: number) => {
-      const maxX = window.innerWidth < 768 ? 70 : 85;
+      const maxX = 75;
       const newX = 5 + Math.random() * (maxX - 5);
       const duration = 3 + Math.random() * 3;
 
@@ -84,7 +84,7 @@ export default function CatMascot({ onOpen }: CatMascotProps) {
       onClick={handleClick}
       style={{
         position: 'fixed',
-        bottom: 32,
+        bottom: '0px',
         zIndex: 50,
         cursor: 'pointer',
         userSelect: 'none',
@@ -172,7 +172,7 @@ export default function CatMascot({ onOpen }: CatMascotProps) {
             style={{
               imageRendering: 'pixelated',
               display: 'block',
-              width: isMobile ? '120px' : '160px',
+              width: '200px',
               height: 'auto',
             }}
           />

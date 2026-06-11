@@ -222,10 +222,10 @@ export default function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
           transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
           style={{
             position: 'fixed',
-            bottom: '200px',
-            right: 24,
+            bottom: '24px',
+            right: '24px',
             zIndex: 100,
-            width: 'min(380px, calc(100vw - 48px))',
+            width: '380px',
             height: 560,
             borderRadius: 20,
             border: '1px solid rgba(18,36,168,0.15)',

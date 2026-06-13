@@ -24,6 +24,13 @@ interface Message {
 const BOT_URL =
   process.env.NEXT_PUBLIC_BOT_URL ?? 'https://portfolio-bot-uunf.onrender.com';
 
+const personalityMap: Record<string, string> = {
+  Pro: 'professional',
+  Witty: 'witty',
+  Hype: 'hype',
+  ELI5: 'eli5',
+};
+
 async function getResponse(
   message: string,
   personality: string,
@@ -32,7 +39,7 @@ async function getResponse(
   const res = await fetch(`${BOT_URL}/chat`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ session_id, message, personality }),
+    body: JSON.stringify({ session_id, message, personality: personalityMap[personality] ?? 'witty' }),
   });
 
   if (!res.ok) {

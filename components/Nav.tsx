@@ -2,16 +2,20 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const links = [
-  { label: 'Experience', href: '#experience' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'About', href: '/about' },
+  { label: 'Experience', href: '/#experience' },
+  { label: 'Projects', href: '/#projects' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -30,9 +34,14 @@ export default function Nav() {
 
   const handleNavClick = (href: string) => {
     setMenuOpen(false);
-    const el = document.querySelector(href);
+    const el = document.querySelector(href.replace('/', ''));
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
+
+  // On-page section links only get the smooth-scroll treatment when we're
+  // already on the home page; everywhere else they should behave like a
+  // normal navigation link (browser jumps to the hash after routing home).
+  const isOnPageHash = (href: string) => href.startsWith('/#') && pathname === '/';
 
   return (
     <>
@@ -53,15 +62,26 @@ export default function Nav() {
 
           {/* Desktop links */}
           <div className="hidden md:flex items-center gap-8">
-            {links.map((l) => (
-              <button
-                key={l.label}
-                onClick={() => handleNavClick(l.href)}
-                className="nav-link text-sm font-body text-muted hover:text-ink transition-colors duration-200 cursor-pointer bg-transparent border-none"
-              >
-                {l.label}
-              </button>
-            ))}
+            {links.map((l) =>
+              isOnPageHash(l.href) ? (
+                <button
+                  key={l.label}
+                  onClick={() => handleNavClick(l.href)}
+                  className="nav-link text-sm font-body text-muted hover:text-ink transition-colors duration-200 cursor-pointer bg-transparent border-none"
+                >
+                  {l.label}
+                </button>
+              ) : (
+                <Link
+                  key={l.label}
+                  href={l.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="nav-link text-sm font-body text-muted hover:text-ink transition-colors duration-200"
+                >
+                  {l.label}
+                </Link>
+              )
+            )}
             <a
               href="/resume.pdf"
               download
@@ -108,18 +128,35 @@ export default function Nav() {
             className="fixed inset-0 z-40 bg-bg flex flex-col justify-center px-10"
           >
             <div className="flex flex-col gap-8">
-              {links.map((l, i) => (
-                <motion.button
-                  key={l.label}
-                  initial={{ opacity: 0, x: 24 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.05 * i + 0.1 }}
-                  onClick={() => handleNavClick(l.href)}
-                  className="text-left font-heading text-5xl font-black text-ink hover:text-accent transition-colors duration-200 cursor-pointer bg-transparent border-none"
-                >
-                  {l.label}
-                </motion.button>
-              ))}
+              {links.map((l, i) =>
+                isOnPageHash(l.href) ? (
+                  <motion.button
+                    key={l.label}
+                    initial={{ opacity: 0, x: 24 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.05 * i + 0.1 }}
+                    onClick={() => handleNavClick(l.href)}
+                    className="text-left font-heading text-5xl font-black text-ink hover:text-accent transition-colors duration-200 cursor-pointer bg-transparent border-none"
+                  >
+                    {l.label}
+                  </motion.button>
+                ) : (
+                  <motion.div
+                    key={l.label}
+                    initial={{ opacity: 0, x: 24 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.05 * i + 0.1 }}
+                  >
+                    <Link
+                      href={l.href}
+                      onClick={() => setMenuOpen(false)}
+                      className="text-left font-heading text-5xl font-black text-ink hover:text-accent transition-colors duration-200"
+                    >
+                      {l.label}
+                    </Link>
+                  </motion.div>
+                )
+              )}
               <motion.a
                 initial={{ opacity: 0, x: 24 }}
                 animate={{ opacity: 1, x: 0 }}
